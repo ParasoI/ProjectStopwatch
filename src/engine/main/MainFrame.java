@@ -11,6 +11,8 @@ public class MainFrame extends JFrame {
     private JMenuItem createTask;
     private JMenuItem openTask;
     private JMenuItem deleteTask;
+    private Task task;
+    private Stopwatch stopwatch;
 
     public MainFrame(){
 
@@ -19,6 +21,8 @@ public class MainFrame extends JFrame {
         createTask = new JMenuItem("Create Project");
         openTask = new JMenuItem("Open Project");
         deleteTask = new JMenuItem("Delete Project");
+        task = new Task(99999,"IU - BBIBBI with Scribble", 54321);
+        stopwatch = new Stopwatch();
 
         UIManager.put("PopupMenu.border", new LineBorder(Color.decode("#333333")));
 
@@ -52,7 +56,7 @@ public class MainFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Project Scheduler");
         this.setResizable(false);
-        this.setContentPane(new MainPanel());
+        this.setContentPane(new MainPanel(task, stopwatch));
 
         this.setJMenuBar(menuBar);
 
