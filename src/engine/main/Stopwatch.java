@@ -10,9 +10,7 @@ public class Stopwatch {
     private long elapsed;
     private long currentStart;
     private long currentEnd;
-    private JLabel label;
     private boolean isPlaying;
-    private Task task;
 
     public Stopwatch() {
         elapsed = 0;
@@ -21,58 +19,36 @@ public class Stopwatch {
         isPlaying = false;
     }
 
-    public void pauseTime(){
 
-        isPlaying = false;
-
-        currentEnd = System.currentTimeMillis();
-        elapsed += (currentEnd - currentStart) / 1000;
-    };
-
-    public void playTime() throws InterruptedException {
-
-        isPlaying = true;
-
-        currentStart = System.currentTimeMillis();
-
-        SwingWorker swingWorker = new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {
-
-                while(isPlaying){
-                    Long elapsedSeconds = task.getTaskDuration() + elapsed + ((System.currentTimeMillis() - currentStart ) / 1000);
-                    label.setText(SecondsUtils.toLabel(elapsedSeconds));
-                    Thread.sleep(1000);
-                }
-
-                return null;
-            }
-        };
-
-        swingWorker.execute();
-
+    public long getElapsed() {
+        return elapsed;
     }
 
-    public void saveTime(){
-
-        task.setTaskDuration(task.getTaskDuration() + elapsed);
-        resetTime();
+    public void setElapsed(long elapsed) {
+        this.elapsed = elapsed;
     }
 
-    public void resetTime(){
-
-        elapsed = 0;
-        currentStart = 0;
-        currentEnd = 0;
-        label.setText(SecondsUtils.toLabel(task.getTaskDuration()));
-        isPlaying = false;
+    public long getCurrentStart() {
+        return currentStart;
     }
 
-    public void setLabel(JLabel label) {
-        this.label = label;
+    public void setCurrentStart(long currentStart) {
+        this.currentStart = currentStart;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public long getCurrentEnd() {
+        return currentEnd;
+    }
+
+    public void setCurrentEnd(long currentEnd) {
+        this.currentEnd = currentEnd;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
     }
 }

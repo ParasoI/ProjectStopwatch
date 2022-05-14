@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
-public class MainPanel<btn_save, btn_reset> extends JPanel implements ActionListener {
+public class MainPanel extends JPanel {
 
     private JLabel lbl_title;
     private JLabel lbl_taskName;
@@ -14,11 +15,8 @@ public class MainPanel<btn_save, btn_reset> extends JPanel implements ActionList
     private JButton btn_reset;
     private JButton btn_save;
     private boolean isPlaying;
-    private Stopwatch stopwatch;
-    private Task task;
-    //Create task, Open task, Delete task will be on JMenu
 
-    public MainPanel(Task task, Stopwatch stopwatch) {
+    public MainPanel() {
 
         lbl_title = new JLabel("Project Stopwatch");
         lbl_taskName = new JLabel("Task Name");
@@ -28,39 +26,29 @@ public class MainPanel<btn_save, btn_reset> extends JPanel implements ActionList
         btn_save = new JButton();
         isPlaying = false;
 
-        this.task = task;
-        this.stopwatch = stopwatch;
-        stopwatch.setTask(task);
-        stopwatch.setLabel(lbl_taskDuration);
-
         lbl_title.setForeground(Color.WHITE);
         lbl_title.setFont(new Font("Bangers",Font.PLAIN,36));
 
         lbl_taskName.setForeground(Color.WHITE);
         lbl_taskName.setFont(new Font("Roboto",Font.PLAIN,14));
-        lbl_taskName.setText(task.getTaskName());
 
         lbl_taskDuration.setForeground(Color.WHITE);
         lbl_taskDuration.setFont(new Font("Roboto",Font.PLAIN,20));
-        lbl_taskDuration.setText(SecondsUtils.toLabel(task.getTaskDuration()));
 
         btn_playPause.setPreferredSize(new Dimension(32,32));
         btn_playPause.setBackground(null);
         btn_playPause.setBorderPainted(false);
         btn_playPause.setIcon(new ImageIcon(this.getClass().getResource("../../resources/play_32px.png")));
-        btn_playPause.addActionListener(this);
 
         btn_reset.setPreferredSize(new Dimension(32,32));
         btn_reset.setBackground(null);
         btn_reset.setBorderPainted(false);
         btn_reset.setIcon(new ImageIcon(this.getClass().getResource("../../resources/reset_32px.png")));
-        btn_reset.addActionListener(this);
 
         btn_save.setPreferredSize(new Dimension(32,32));
         btn_save.setBackground(null);
         btn_save.setBorderPainted(false);
         btn_save.setIcon(new ImageIcon(this.getClass().getResource("../../resources/save_32px.png")));
-        btn_save.addActionListener(this);
 
         this.setPreferredSize(new Dimension(500,300));
         this.setBackground(Color.decode("#0d0d0d"));
@@ -126,38 +114,59 @@ public class MainPanel<btn_save, btn_reset> extends JPanel implements ActionList
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btn_playPause){
-            if(isPlaying == true){
-                btn_reset.setEnabled(true);
-                btn_save.setEnabled(true);
-                stopwatch.pauseTime();
-                isPlaying = false;
-                btn_playPause.setIcon(new ImageIcon(this.getClass().getResource("../../resources/play_32px.png")));
-
-            }else{
-                btn_reset.setEnabled(false);
-                btn_save.setEnabled(false);
-                isPlaying = true;
-                btn_playPause.setIcon(new ImageIcon(this.getClass().getResource("../../resources/pause_32px.png")));
-                try {
-                    stopwatch.playTime();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-        }
-        if(e.getSource() == btn_save){
-            stopwatch.saveTime();
-        }
-        if(e.getSource() == btn_reset){
-            stopwatch.resetTime();
-            isPlaying = false;
-            btn_playPause.setIcon(new ImageIcon(this.getClass().getResource("../../resources/play_32px.png")));
-        }
+    public JLabel getLbl_title() {
+        return lbl_title;
     }
 
+    public void setLbl_title(JLabel lbl_title) {
+        this.lbl_title = lbl_title;
+    }
 
+    public JLabel getLbl_taskName() {
+        return lbl_taskName;
+    }
+
+    public void setLbl_taskName(JLabel lbl_taskName) {
+        this.lbl_taskName = lbl_taskName;
+    }
+
+    public JLabel getLbl_taskDuration() {
+        return lbl_taskDuration;
+    }
+
+    public void setLbl_taskDuration(JLabel lbl_taskDuration) {
+        this.lbl_taskDuration = lbl_taskDuration;
+    }
+
+    public JButton getBtn_playPause() {
+        return btn_playPause;
+    }
+
+    public void setBtn_playPause(JButton btn_playPause) {
+        this.btn_playPause = btn_playPause;
+    }
+
+    public JButton getBtn_reset() {
+        return btn_reset;
+    }
+
+    public void setBtn_reset(JButton btn_reset) {
+        this.btn_reset = btn_reset;
+    }
+
+    public JButton getBtn_save() {
+        return btn_save;
+    }
+
+    public void setBtn_save(JButton btn_save) {
+        this.btn_save = btn_save;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
 }

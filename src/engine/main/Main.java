@@ -7,20 +7,16 @@ import java.sql.SQLException;
 
 public class Main {
 
+
+
     public static void main(String[] args) {
 
-        final String url = "jdbc:mysql://remotemysql.com:3306/zFr2acY6oX";
-        final String username = "zFr2acY6oX";
-        final String password = "Is6QT4Nk8I";
-
-        System.out.println("Connecting database...");
-
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            System.out.println("Database connected!");
-        } catch (SQLException e) {
-            throw new IllegalStateException("Cannot connect the database!", e);
-        }
-
-        new MainFrame();
+        MainFrame view1 = new MainFrame();
+        MainPanel view2 = new MainPanel();
+        ProjectListFrame view3 = new ProjectListFrame();
+        Task model = new Task(0,"0",0);
+        Stopwatch stopwatch = new Stopwatch();
+        Controller controller = new Controller(view1, view2, view3, model, stopwatch);
+        controller.init();
     }
 }

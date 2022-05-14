@@ -9,20 +9,14 @@ public class MainFrame extends JFrame {
     private JMenuBar menuBar;
     private JMenu fileMenu;
     private JMenuItem createTask;
-    private JMenuItem openTask;
-    private JMenuItem deleteTask;
-    private Task task;
-    private Stopwatch stopwatch;
+    private JMenuItem openDeleteTask;
 
-    public MainFrame(){
+    public MainFrame() {
 
         menuBar = new JMenuBar();
         fileMenu = new JMenu("File");
         createTask = new JMenuItem("Create Project");
-        openTask = new JMenuItem("Open Project");
-        deleteTask = new JMenuItem("Delete Project");
-        task = new Task(99999,"IU - BBIBBI with Scribble", 54321);
-        stopwatch = new Stopwatch();
+        openDeleteTask = new JMenuItem("Project List");
 
         UIManager.put("PopupMenu.border", new LineBorder(Color.decode("#333333")));
 
@@ -37,29 +31,47 @@ public class MainFrame extends JFrame {
         createTask.setForeground(Color.WHITE);
         createTask.setBorderPainted(false);
 
-        openTask.setBackground(Color.decode("#333333"));
-        openTask.setForeground(Color.WHITE);
-        openTask.setBorderPainted(false);
-
-        deleteTask.setBackground(Color.decode("#333333"));
-        deleteTask.setForeground(Color.WHITE);
-        deleteTask.setBorderPainted(false);
+        openDeleteTask.setBackground(Color.decode("#333333"));
+        openDeleteTask.setForeground(Color.WHITE);
+        openDeleteTask.setBorderPainted(false);
 
         fileMenu.add(createTask);
-        fileMenu.add(openTask);
-        fileMenu.add(deleteTask);
+        fileMenu.add(openDeleteTask);
         menuBar.add(fileMenu);
 
-        this.setSize(500,300);
+        this.setSize(500, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
         this.setTitle("Project Scheduler");
         this.setResizable(false);
-        this.setContentPane(new MainPanel(task, stopwatch));
 
         this.setJMenuBar(menuBar);
 
-        this.setVisible(true);
+        //this.setVisible(true);
+    }
+
+    public JMenu getFileMenu() {
+        return fileMenu;
+    }
+
+    public void setFileMenu(JMenu fileMenu) {
+        this.fileMenu = fileMenu;
+    }
+
+    public JMenuItem getCreateTask() {
+        return createTask;
+    }
+
+    public void setCreateTask(JMenuItem createTask) {
+        this.createTask = createTask;
+    }
+
+    public JMenuItem getOpenDeleteTask() {
+        return openDeleteTask;
+    }
+
+    public void setOpenDeleteTask(JMenuItem openDeleteTask) {
+        this.openDeleteTask = openDeleteTask;
     }
 }
