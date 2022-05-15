@@ -9,7 +9,8 @@ import java.awt.*;
 public class ProjectListFrame extends JFrame {
 
     private final Font BODY_FONT2;
-    private Color NEARBLACK2;
+    private final Color NEARBLACK2;
+    private final ImageIcon FRAMELOGO;
     private JScrollPane scrollPane;
     private JTable table;
     private DefaultTableModel defaultTableModel;
@@ -21,6 +22,7 @@ public class ProjectListFrame extends JFrame {
 
         BODY_FONT2 = new Font("Roboto",Font.PLAIN,14);
         NEARBLACK2 = Color.decode("#0d0d0d");
+        FRAMELOGO = new ImageIcon(this.getClass().getResource("../../resources/logo_only.png"));
 
         table = new JTable();
         scrollPane = new JScrollPane(table);
@@ -49,6 +51,8 @@ public class ProjectListFrame extends JFrame {
         this.setTitle("Project List");
         this.setResizable(false);
         this.setBackground(NEARBLACK2);
+        this.setIconImage(FRAMELOGO.getImage());
+
 
         this.add(scrollPane);
 

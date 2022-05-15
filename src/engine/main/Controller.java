@@ -322,6 +322,8 @@ public class Controller implements ActionListener {
             Statement statement = connection.createStatement();
             statement.execute(query);
 
+            JOptionPane.showMessageDialog(null, "Your Progress is saved!","Success",JOptionPane.INFORMATION_MESSAGE);
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
             throw new IllegalStateException("Cannot connect the database!", e);

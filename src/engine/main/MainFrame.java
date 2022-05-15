@@ -6,11 +6,12 @@ import java.awt.*;
 
 public class MainFrame extends JFrame {
 
+    private final Color NEARBLACK;
+    private final ImageIcon FRAMELOGO;
     private JMenuBar menuBar;
     private JMenu menuFile;
     private JMenuItem mit_createTask;
     private JMenuItem mit_openDeleteTask;
-    private final Color NEARBLACK;
 
     public MainFrame() {
 
@@ -19,6 +20,7 @@ public class MainFrame extends JFrame {
         mit_createTask = new JMenuItem("Create Project");
         mit_openDeleteTask = new JMenuItem("Project List");
         NEARBLACK = Color.decode("#333333");
+        FRAMELOGO = new ImageIcon(this.getClass().getResource("../../resources/logo_only.png"));
 
         UIManager.put("PopupMenu.border", new LineBorder(NEARBLACK));
 
@@ -47,6 +49,7 @@ public class MainFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Project Scheduler");
         this.setResizable(false);
+        this.setIconImage(FRAMELOGO.getImage());
 
         this.setJMenuBar(menuBar);
 

@@ -13,7 +13,7 @@ public class MainPanel extends JPanel {
     private final Font BODY_FONT;
     private final Font BODY_FONT2;
     private final Dimension DIM_BUTTON;
-    private Color NEARBLACK2;
+    private final Color NEARBLACK2;
     private final ImageIcon ICO_PLAY;
     private final ImageIcon ICO_PAUSE;
     private final ImageIcon ICO_RESET;
