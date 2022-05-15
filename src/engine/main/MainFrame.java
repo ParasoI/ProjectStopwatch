@@ -7,37 +7,39 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
     private JMenuBar menuBar;
-    private JMenu fileMenu;
-    private JMenuItem createTask;
-    private JMenuItem openDeleteTask;
+    private JMenu menuFile;
+    private JMenuItem mit_createTask;
+    private JMenuItem mit_openDeleteTask;
+    private final Color NEARBLACK;
 
     public MainFrame() {
 
         menuBar = new JMenuBar();
-        fileMenu = new JMenu("File");
-        createTask = new JMenuItem("Create Project");
-        openDeleteTask = new JMenuItem("Project List");
+        menuFile = new JMenu("File");
+        mit_createTask = new JMenuItem("Create Project");
+        mit_openDeleteTask = new JMenuItem("Project List");
+        NEARBLACK = Color.decode("#333333");
 
-        UIManager.put("PopupMenu.border", new LineBorder(Color.decode("#333333")));
+        UIManager.put("PopupMenu.border", new LineBorder(NEARBLACK));
 
-        menuBar.setBackground(Color.decode("#333333"));
+        menuBar.setBackground(NEARBLACK);
         menuBar.setBorderPainted(false);
 
-        fileMenu.setBackground(Color.decode("#333333"));
-        fileMenu.setForeground(Color.WHITE);
-        fileMenu.setBorderPainted(false);
+        menuFile.setBackground(NEARBLACK);
+        menuFile.setForeground(Color.WHITE);
+        menuFile.setBorderPainted(false);
 
-        createTask.setBackground(Color.decode("#333333"));
-        createTask.setForeground(Color.WHITE);
-        createTask.setBorderPainted(false);
+        mit_createTask.setBackground(NEARBLACK);
+        mit_createTask.setForeground(Color.WHITE);
+        mit_createTask.setBorderPainted(false);
 
-        openDeleteTask.setBackground(Color.decode("#333333"));
-        openDeleteTask.setForeground(Color.WHITE);
-        openDeleteTask.setBorderPainted(false);
+        mit_openDeleteTask.setBackground(NEARBLACK);
+        mit_openDeleteTask.setForeground(Color.WHITE);
+        mit_openDeleteTask.setBorderPainted(false);
 
-        fileMenu.add(createTask);
-        fileMenu.add(openDeleteTask);
-        menuBar.add(fileMenu);
+        menuFile.add(mit_createTask);
+        menuFile.add(mit_openDeleteTask);
+        menuBar.add(menuFile);
 
         this.setSize(500, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,30 +50,35 @@ public class MainFrame extends JFrame {
 
         this.setJMenuBar(menuBar);
 
+        //Controller will set the frame visible
         //this.setVisible(true);
     }
 
-    public JMenu getFileMenu() {
-        return fileMenu;
+    public JMenu getMenuFile() {
+        return menuFile;
     }
 
-    public void setFileMenu(JMenu fileMenu) {
-        this.fileMenu = fileMenu;
+    public void setMenuFile(JMenu menuFile) {
+        this.menuFile = menuFile;
     }
 
-    public JMenuItem getCreateTask() {
-        return createTask;
+    public JMenuItem getMit_createTask() {
+        return mit_createTask;
     }
 
-    public void setCreateTask(JMenuItem createTask) {
-        this.createTask = createTask;
+    public void setMit_createTask(JMenuItem mit_createTask) {
+        this.mit_createTask = mit_createTask;
     }
 
-    public JMenuItem getOpenDeleteTask() {
-        return openDeleteTask;
+    public JMenuItem getMit_openDeleteTask() {
+        return mit_openDeleteTask;
     }
 
-    public void setOpenDeleteTask(JMenuItem openDeleteTask) {
-        this.openDeleteTask = openDeleteTask;
+    public void setMit_openDeleteTask(JMenuItem openDeleteTask) {
+        this.mit_openDeleteTask = openDeleteTask;
+    }
+
+    public Color getNEARBLACK() {
+        return NEARBLACK;
     }
 }

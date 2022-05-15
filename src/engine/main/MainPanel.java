@@ -8,50 +8,76 @@ import java.sql.*;
 
 public class MainPanel extends JPanel {
 
+    private final String TITLE;
+    private final Font TITLE_FONT;
+    private final Font BODY_FONT;
+    private final Font BODY_FONT2;
+    private final Dimension DIM_BUTTON;
+    private Color NEARBLACK2;
+    private final ImageIcon ICO_PLAY;
+    private final ImageIcon ICO_PAUSE;
+    private final ImageIcon ICO_RESET;
+    private final ImageIcon ICO_SAVE;
     private JLabel lbl_title;
     private JLabel lbl_taskName;
     private JLabel lbl_taskDuration;
     private JButton btn_playPause;
     private JButton btn_reset;
     private JButton btn_save;
-    private boolean isPlaying;
 
     public MainPanel() {
 
-        lbl_title = new JLabel("Project Stopwatch");
+        TITLE = "Project Stopwatch";
+        TITLE_FONT = new Font("Bangers",Font.PLAIN,36);
+        BODY_FONT = new Font("Roboto",Font.PLAIN,20);
+        BODY_FONT2 = new Font("Roboto",Font.PLAIN,14);
+        DIM_BUTTON = new Dimension(32,32);
+        NEARBLACK2 = Color.decode("#0d0d0d");
+        ICO_PLAY = new ImageIcon(this.getClass().getResource("../../resources/play_32px.png"));
+        ICO_PAUSE = new ImageIcon(this.getClass().getResource("../../resources/pause_32px.png"));
+        ICO_RESET = new ImageIcon(this.getClass().getResource("../../resources/reset_32px.png"));
+        ICO_SAVE = new ImageIcon(this.getClass().getResource("../../resources/save_32px.png"));
+
+        lbl_title = new JLabel(TITLE);
         lbl_taskName = new JLabel("Task Name");
         lbl_taskDuration = new JLabel("Task Duration");
         btn_playPause = new JButton();
         btn_reset = new JButton();
         btn_save = new JButton();
-        isPlaying = false;
 
         lbl_title.setForeground(Color.WHITE);
-        lbl_title.setFont(new Font("Bangers",Font.PLAIN,36));
+        lbl_title.setFont(TITLE_FONT);
 
         lbl_taskName.setForeground(Color.WHITE);
-        lbl_taskName.setFont(new Font("Roboto",Font.PLAIN,14));
+        lbl_taskName.setFont(BODY_FONT2);
 
         lbl_taskDuration.setForeground(Color.WHITE);
-        lbl_taskDuration.setFont(new Font("Roboto",Font.PLAIN,20));
+        lbl_taskDuration.setFont(BODY_FONT);
 
-        btn_playPause.setPreferredSize(new Dimension(32,32));
+        btn_playPause.setPreferredSize(DIM_BUTTON);
         btn_playPause.setBackground(null);
         btn_playPause.setBorderPainted(false);
-        btn_playPause.setIcon(new ImageIcon(this.getClass().getResource("../../resources/play_32px.png")));
+        btn_playPause.setIcon(ICO_PLAY);
 
-        btn_reset.setPreferredSize(new Dimension(32,32));
+        btn_reset.setPreferredSize(DIM_BUTTON);
         btn_reset.setBackground(null);
         btn_reset.setBorderPainted(false);
-        btn_reset.setIcon(new ImageIcon(this.getClass().getResource("../../resources/reset_32px.png")));
+        btn_reset.setIcon(ICO_RESET);
 
-        btn_save.setPreferredSize(new Dimension(32,32));
+        btn_save.setPreferredSize(DIM_BUTTON);
         btn_save.setBackground(null);
         btn_save.setBorderPainted(false);
-        btn_save.setIcon(new ImageIcon(this.getClass().getResource("../../resources/save_32px.png")));
+        btn_save.setIcon(ICO_SAVE);
 
         this.setPreferredSize(new Dimension(500,300));
-        this.setBackground(Color.decode("#0d0d0d"));
+        this.setBackground(NEARBLACK2);
+
+        //Separating layout for readability
+        initLayout();
+
+    }
+
+    public void initLayout(){
 
         GridBagLayout gridB = new GridBagLayout();
         this.setLayout(gridB);
@@ -111,7 +137,6 @@ public class MainPanel extends JPanel {
         gbc.insets = new Insets(0,0,20,0);
         this.add(btn_save,gbc);
         gbc.gridwidth = 1;
-
     }
 
     public JLabel getLbl_title() {
@@ -162,11 +187,43 @@ public class MainPanel extends JPanel {
         this.btn_save = btn_save;
     }
 
-    public boolean isPlaying() {
-        return isPlaying;
+    public String getTITLE() {
+        return TITLE;
     }
 
-    public void setPlaying(boolean playing) {
-        isPlaying = playing;
+    public Font getTITLE_FONT() {
+        return TITLE_FONT;
+    }
+
+    public Font getBODY_FONT() {
+        return BODY_FONT;
+    }
+
+    public Font getBODY_FONT2() {
+        return BODY_FONT2;
+    }
+
+    public Dimension getDIM_BUTTON() {
+        return DIM_BUTTON;
+    }
+
+    public Color getNEARBLACK2() {
+        return NEARBLACK2;
+    }
+
+    public ImageIcon getICO_PLAY() {
+        return ICO_PLAY;
+    }
+
+    public ImageIcon getICO_PAUSE() {
+        return ICO_PAUSE;
+    }
+
+    public ImageIcon getICO_RESET() {
+        return ICO_RESET;
+    }
+
+    public ImageIcon getICO_SAVE() {
+        return ICO_SAVE;
     }
 }

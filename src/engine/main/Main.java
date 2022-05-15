@@ -17,6 +17,7 @@ public class Main {
         Task model = new Task(0,"0",0);
         Stopwatch stopwatch = new Stopwatch();
         Controller controller = new Controller(view1, view2, view3, model, stopwatch);
+
         controller.init();
     }
 }

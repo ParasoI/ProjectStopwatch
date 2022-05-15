@@ -15,7 +15,11 @@ public class Controller implements ActionListener {
     private ProjectListFrame view3;
     private Stopwatch stopwatch;
 
-    public Controller(MainFrame view1, MainPanel view2, ProjectListFrame view3, Task model, Stopwatch stopwatch) {
+    public Controller(MainFrame view1,
+        MainPanel view2,
+        ProjectListFrame view3,
+        Task model,
+        Stopwatch stopwatch) {
 
         this.view1 = view1;
         this.view2 = view2;
@@ -26,12 +30,12 @@ public class Controller implements ActionListener {
 
     public void init(){
 
-        dbLoad(1);
+        taskOpenLatest();
         view2.getLbl_taskName().setText(model.getTaskName());
         view2.getLbl_taskDuration().setText(SecondsUtils.toLabel(model.getTaskDuration()));
 
-        view1.getCreateTask().addActionListener(this);
-        view1.getOpenDeleteTask().addActionListener(this);
+        view1.getMit_createTask().addActionListener(this);
+        view1.getMit_openDeleteTask().addActionListener(this);
         view2.getBtn_playPause().addActionListener(this);
         view2.getBtn_save().addActionListener(this);
         view2.getBtn_reset().addActionListener(this);
@@ -45,32 +49,23 @@ public class Controller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == view1.getCreateTask()){
+        if(e.getSource() == view1.getMit_createTask()){
             taskCreate();
+            taskOpenLatest();
         }
-        if(e.getSource() == view1.getOpenDeleteTask()){
+        if(e.getSource() == view1.getMit_openDeleteTask()){
             taskList();
         }
         if(e.getSource() == view2.getBtn_playPause()){
-            if(view2.isPlaying()){
-                view2.getBtn_reset().setEnabled(true);
-                view2.getBtn_save().setEnabled(true);
+            if(stopwatch.isPlaying()){
                 timePause();
-                view2.setPlaying(false);
-                view2.getBtn_playPause().setIcon(new ImageIcon(this.getClass().getResource("../../resources/play_32px.png")));
-
             }else{
-                view2.getBtn_reset().setEnabled(false);
-                view2.getBtn_save().setEnabled(false);
-                view2.setPlaying(true);
-                view2.getBtn_playPause().setIcon(new ImageIcon(this.getClass().getResource("../../resources/pause_32px.png")));
                 try {
                     timePlay();
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
             }
-
         }
         if(e.getSource() == view2.getBtn_save()){
             timeSave();
@@ -78,11 +73,9 @@ public class Controller implements ActionListener {
         }
         if(e.getSource() == view2.getBtn_reset()){
             timeReset();
-            view2.setPlaying(false);
-            view2.getBtn_playPause().setIcon(new ImageIcon(this.getClass().getResource("../../resources/play_32px.png")));
+
         }
         if(e.getSource() == view3.getMit_openTask()){
-            System.out.println("ell");
             taskOpen();
         }
         if(e.getSource() == view3.getMit_deleteTask()){
@@ -94,7 +87,6 @@ public class Controller implements ActionListener {
     public void taskCreate(){
 
         String taskName = JOptionPane.showInputDialog("Project Name:");
-        System.out.println(taskName);
         if(taskName == null){
             return;
         }else if(taskName.equals("")){
@@ -103,12 +95,11 @@ public class Controller implements ActionListener {
             String query = "INSERT INTO task (taskName, taskDuration) VALUES(\"" + taskName +"\", 0);";
             try{
                 Connection connection = DriverManager.getConnection(Database.url, Database.username, Database.password);
-
-                System.out.println("Database connected!");
                 Statement statement = connection.createStatement();
                 statement.execute(query);
 
             } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
                 throw new IllegalStateException("Cannot connect the database!", e);
             }
         }
@@ -117,7 +108,7 @@ public class Controller implements ActionListener {
 
     public void taskList(){
 
-        //reset Project List Frame
+        //Reset Project List Frame
         view3 = new ProjectListFrame();
         view3.getMit_openTask().addActionListener(this);
         view3.getMit_deleteTask().addActionListener(this);
@@ -131,8 +122,6 @@ public class Controller implements ActionListener {
 
         try{
             Connection connection = DriverManager.getConnection(Database.url, Database.username, Database.password);
-
-            System.out.println("Database connected!");
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
 
@@ -140,6 +129,7 @@ public class Controller implements ActionListener {
                 rowCount = result.getInt("COUNT(taskId)");
             }
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
             throw new IllegalStateException("Cannot connect the database!", e);
         }
 
@@ -151,8 +141,6 @@ public class Controller implements ActionListener {
 
         try{
             Connection connection = DriverManager.getConnection(Database.url, Database.username, Database.password);
-
-            System.out.println("Database connected!");
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
 
@@ -167,6 +155,7 @@ public class Controller implements ActionListener {
 
             }
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
             throw new IllegalStateException("Cannot connect the database!", e);
         }
 
@@ -194,6 +183,34 @@ public class Controller implements ActionListener {
 
     }
 
+    public void taskOpen(int taskId){
+
+        dbLoad(taskId);
+        view2.getLbl_taskName().setText(model.getTaskName());
+        view2.getLbl_taskDuration().setText(SecondsUtils.toLabel(model.getTaskDuration()));
+
+    }
+
+    public void taskOpenLatest(){
+        int latestTaskId;
+        String query = "SELECT MAX(taskId) FROM task;";
+        try{
+            Connection connection = DriverManager.getConnection(Database.url, Database.username, Database.password);
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            result.next();
+            latestTaskId = result.getInt("MAX(taskId)");
+
+            taskOpen(latestTaskId);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
+            throw new IllegalStateException("Cannot connect the database!", e);
+        }
+
+    }
+
     public void taskDelete(){
 
         int selectedTaskId = 0;
@@ -203,24 +220,26 @@ public class Controller implements ActionListener {
 
         try{
             Connection connection = DriverManager.getConnection(Database.url, Database.username, Database.password);
-
-            System.out.println("Database connected!");
             Statement statement = connection.createStatement();
             statement.execute(query);
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
             throw new IllegalStateException("Cannot connect the database!", e);
         }
 
-
-        dbLoad(1);
-        view2.getLbl_taskName().setText(model.getTaskName());
-        view2.getLbl_taskDuration().setText(SecondsUtils.toLabel(model.getTaskDuration()));
+        if(selectedTaskId == model.getTaskId()){
+            taskOpenLatest();
+        }
         view3.dispose();
 
     }
 
     public void timePause(){
+
+        view2.getBtn_reset().setEnabled(true);
+        view2.getBtn_save().setEnabled(true);
+        view2.getBtn_playPause().setIcon(view2.getICO_PLAY());
 
         stopwatch.setPlaying(false);
 
@@ -229,6 +248,10 @@ public class Controller implements ActionListener {
     };
 
     public void timePlay() throws InterruptedException {
+
+        view2.getBtn_reset().setEnabled(false);
+        view2.getBtn_save().setEnabled(false);
+        view2.getBtn_playPause().setIcon(view2.getICO_PAUSE());
 
         stopwatch.setPlaying(true);
 
@@ -254,12 +277,16 @@ public class Controller implements ActionListener {
 
     public void timeSave(){
 
-        model.setTaskDuration(model.getTaskDuration() + stopwatch.getElapsed());
+        model.setRunningDuration(stopwatch.getElapsed());
+        model.setTaskDuration(model.getTaskDuration() + model.getRunningDuration());
         timeReset();
     }
 
     public void timeReset(){
 
+        view2.getBtn_playPause().setIcon(view2.getICO_PLAY());
+
+        model.setRunningDuration(0);
         stopwatch.setElapsed(0);
         stopwatch.setCurrentStart(0);
         stopwatch.setCurrentEnd(0);
@@ -273,8 +300,6 @@ public class Controller implements ActionListener {
 
         try{
             Connection connection = DriverManager.getConnection(Database.url, Database.username, Database.password);
-
-            System.out.println("Database connected!");
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(query);
 
@@ -284,6 +309,7 @@ public class Controller implements ActionListener {
                 model.setTaskDuration(result.getLong("taskDuration"));
             }
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
             throw new IllegalStateException("Cannot connect the database!", e);
         }
     }
@@ -293,12 +319,11 @@ public class Controller implements ActionListener {
         String query = "UPDATE task SET taskDuration = " + model.getTaskDuration() + " WHERE taskId = " +  model.getTaskId() + ";";
         try{
             Connection connection = DriverManager.getConnection(Database.url, Database.username, Database.password);
-
-            System.out.println("Database connected!");
             Statement statement = connection.createStatement();
             statement.execute(query);
 
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Cannot connect the database!","Error",JOptionPane.ERROR_MESSAGE);
             throw new IllegalStateException("Cannot connect the database!", e);
         }
 

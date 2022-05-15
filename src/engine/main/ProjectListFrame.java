@@ -8,6 +8,8 @@ import java.awt.*;
 
 public class ProjectListFrame extends JFrame {
 
+    private final Font BODY_FONT2;
+    private Color NEARBLACK2;
     private JScrollPane scrollPane;
     private JTable table;
     private DefaultTableModel defaultTableModel;
@@ -16,6 +18,9 @@ public class ProjectListFrame extends JFrame {
     private JMenuItem mit_deleteTask;
 
     public ProjectListFrame(){
+
+        BODY_FONT2 = new Font("Roboto",Font.PLAIN,14);
+        NEARBLACK2 = Color.decode("#0d0d0d");
 
         table = new JTable();
         scrollPane = new JScrollPane(table);
@@ -27,9 +32,9 @@ public class ProjectListFrame extends JFrame {
         popupMenu.add(mit_openTask);
         popupMenu.add(mit_deleteTask);
 
-        table.setFont(new Font("Roboto", Font.PLAIN, 14));
+        table.setFont(BODY_FONT2);
         table.setForeground(Color.WHITE);
-        table.setBackground(Color.decode("#0d0d0d"));
+        table.setBackground(NEARBLACK2);
         table.setSelectionBackground(Color.WHITE);
         table.setSelectionForeground(Color.BLACK);
 
@@ -43,7 +48,7 @@ public class ProjectListFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Project List");
         this.setResizable(false);
-        this.setBackground(Color.decode("#0d0d0d"));
+        this.setBackground(NEARBLACK2);
 
         this.add(scrollPane);
 
@@ -65,7 +70,7 @@ public class ProjectListFrame extends JFrame {
         table.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
 
         table.getTableHeader().setOpaque(false);
-        table.getTableHeader().setBackground(Color.decode("#0d0d0d"));
+        table.getTableHeader().setBackground(NEARBLACK2);
         table.getTableHeader().setForeground(Color.WHITE);
     }
 
