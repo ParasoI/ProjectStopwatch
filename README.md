@@ -1,6 +1,6 @@
 # Project Stopwatch
--logo
-a stopwatch for a specific task/project/activity
+![](src/resources/logo.png)
+* a stopwatch for a specific task/project/activity
 ## Output
 ![](screenshots/scr01.png)
 
