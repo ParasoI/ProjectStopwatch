@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
         mit_createTask = new JMenuItem("Create Project");
         mit_openDeleteTask = new JMenuItem("Project List");
         NEARBLACK = Color.decode("#333333");
-        FRAMELOGO = new ImageIcon(this.getClass().getResource("../../resources/logo_only.png"));
+        FRAMELOGO = new ImageIcon(this.getClass().getResource("resources/logo_only.png"));
 
         UIManager.put("PopupMenu.border", new LineBorder(NEARBLACK));
 

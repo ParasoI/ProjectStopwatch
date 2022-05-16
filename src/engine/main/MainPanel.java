@@ -33,10 +33,10 @@ public class MainPanel extends JPanel {
         BODY_FONT2 = new Font("Roboto",Font.PLAIN,14);
         DIM_BUTTON = new Dimension(32,32);
         NEARBLACK2 = Color.decode("#0d0d0d");
-        ICO_PLAY = new ImageIcon(this.getClass().getResource("../../resources/play_32px.png"));
-        ICO_PAUSE = new ImageIcon(this.getClass().getResource("../../resources/pause_32px.png"));
-        ICO_RESET = new ImageIcon(this.getClass().getResource("../../resources/reset_32px.png"));
-        ICO_SAVE = new ImageIcon(this.getClass().getResource("../../resources/save_32px.png"));
+        ICO_PLAY = new ImageIcon(this.getClass().getResource("resources/play_32px.png"));
+        ICO_PAUSE = new ImageIcon(this.getClass().getResource("resources/pause_32px.png"));
+        ICO_RESET = new ImageIcon(this.getClass().getResource("resources/reset_32px.png"));
+        ICO_SAVE = new ImageIcon(this.getClass().getResource("resources/save_32px.png"));
 
         lbl_title = new JLabel(TITLE);
         lbl_taskName = new JLabel("Task Name");

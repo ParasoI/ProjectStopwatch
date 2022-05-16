@@ -22,7 +22,7 @@ public class ProjectListFrame extends JFrame {
 
         BODY_FONT2 = new Font("Roboto",Font.PLAIN,14);
         NEARBLACK2 = Color.decode("#0d0d0d");
-        FRAMELOGO = new ImageIcon(this.getClass().getResource("../../resources/logo_only.png"));
+        FRAMELOGO = new ImageIcon(this.getClass().getResource("resources/logo_only.png"));
 
         table = new JTable();
         scrollPane = new JScrollPane(table);
