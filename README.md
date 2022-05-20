@@ -163,6 +163,13 @@ public static int MINUTES = 60;
 ```
 https://remotemysql.com/
 ```
+* Schema - zFr2acY6oX
+* Table - task
+* task
+	*  taskID, int(11), NOT NULL, PRIMARY KEY, AUTO_INCREMENT
+	*  taskName, varchar(100)
+	*  taskDuration, bigint(20), DEFAULT 0
+	*  
 ## How to Install?
 * Download the source code
 * Load it in Intellij IDE
